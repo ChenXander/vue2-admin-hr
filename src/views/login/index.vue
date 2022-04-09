@@ -13,22 +13,22 @@
           <img src="@/assets/common/login-logo.png" alt="" />
         </h3>
       </div>
-
-      <el-form-item prop="username">
+      <!-- 账号 -->
+      <el-form-item prop="mobile">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
         <el-input
-          ref="username"
-          v-model="loginForm.username"
-          placeholder="Username"
+          ref="mobile"
+          v-model="loginForm.mobile"
+          placeholder="请输入手机号"
           name="username"
           type="text"
           tabindex="1"
           auto-complete="on"
         />
       </el-form-item>
-
+      <!-- 密码 -->
       <el-form-item prop="password">
         <span class="svg-container">
           <svg-icon icon-class="password" />
@@ -38,7 +38,7 @@
           ref="password"
           v-model="loginForm.password"
           :type="passwordType"
-          placeholder="Password"
+          placeholder="请输入密码"
           name="password"
           tabindex="2"
           auto-complete="on"
@@ -50,7 +50,7 @@
           />
         </span>
       </el-form-item>
-
+      <!-- 登陆按钮 -->
       <el-button
         class="loginBtn"
         :loading="loading"
@@ -58,9 +58,9 @@
         style="width: 100%; margin-bottom: 30px"
         @click.native.prevent="handleLogin"
       >
-        Login
+        登录
       </el-button>
-
+      <!-- 登录提示 -->
       <div class="tips">
         <span style="margin-right: 20px">账号:13800000002</span>
         <span> 密码: 123456</span>
@@ -70,36 +70,35 @@
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
+import { validMobile } from '@/utils/validate'
 
 export default {
   name: 'Login',
   data() {
-    const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
-      } else {
-        callback()
-      }
-    }
-    const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
-      } else {
-        callback()
-      }
+    // 手机号校验
+    const validateMobile = (rule, value, callback) => {
+      validMobile(value) ? callback() : callback(new Error('手机号格式不正确'))
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        // 登录信息
+        mobile: '13800000002',
+        password: '123456'
       },
+      // 表单校验规则
       loginRules: {
-        username: [
-          { required: true, trigger: 'blur', validator: validateUsername }
+        mobile: [
+          { required: true, trigger: 'blur', message: '手机号不能为空' },
+          { validator: validateMobile, trigger: 'blur' }
         ],
         password: [
-          { required: true, trigger: 'blur', validator: validatePassword }
+          { required: true, trigger: 'blur', message: '密码不能为空' },
+          {
+            min: 6,
+            max: 16,
+            message: '密码的长度在6-16位之间 ',
+            trigger: 'blur'
+          }
         ]
       },
       loading: false,
