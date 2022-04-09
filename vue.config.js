@@ -8,22 +8,9 @@ function resolve(dir) {
 
 const name = defaultSettings.title || 'vue Admin Template' // page title
 
-// If your port is set to 80,
-// use administrator privileges to execute the command line.
-// For example, Mac: sudo npm run
-// You can change the port by the following methods:
-// port = 9528 npm run dev OR npm run dev --port = 9528
 const port = process.env.port || process.env.npm_config_port || 9528 // dev port
 
-// All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
-  /**
-   * You will need to set publicPath if you plan to deploy your site under a sub path,
-   * for example GitHub Pages. If you plan to deploy your site to https://foo.github.io/bar/,
-   * then publicPath should be set to "/bar/".
-   * In most cases please use '/' !!!
-   * Detail: https://cli.vuejs.org/config/#publicpath
-   */
   publicPath: '/',
   outputDir: 'dist',
   assetsDir: 'static',
@@ -35,6 +22,17 @@ module.exports = {
     overlay: {
       warnings: false,
       errors: true
+    },
+    // 代理配置
+    proxy: {
+      // 这里的api 表示如果我们的请求地址有/api的时候,就出触发代理机制
+      // localhost:8888/api/abc  => 代理给另一个服务器
+      '/api': {
+        target: 'http://http://ihrm.itheima.net/', // 我们要代理的地址
+        changeOrigin: true // 是否跨域
+        // 路径重写
+        // pathRewrite: {}
+      }
     }
   },
   configureWebpack: {
@@ -115,4 +113,3 @@ module.exports = {
     })
   }
 }
-
