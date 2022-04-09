@@ -71,6 +71,7 @@
 
 <script>
 import { validMobile } from '@/utils/validate'
+import { mapActions } from 'vuex' // 引入vuex的辅助函数
 
 export default {
   name: 'Login',
@@ -115,6 +116,8 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['user/login']), // 子模块的action，并且开启了namespaced，所以引用的时候要带上/user，并且直接this['user/login]来使用
+
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
@@ -126,21 +129,20 @@ export default {
       })
     },
     handleLogin() {
-      this.$refs.loginForm.validate((valid) => {
-        if (valid) {
-          this.loading = true
-          this.$store
-            .dispatch('user/login', this.loginForm)
-            .then(() => {
-              this.$router.push({ path: this.redirect || '/' })
-              this.loading = false
-            })
-            .catch(() => {
-              this.loading = false
-            })
-        } else {
-          console.log('error submit!!')
-          return false
+      // 表单手动校验
+      this.$refs.loginForm.validate(async(isOk) => {
+        if (isOk) {
+          try {
+            this.loading = true
+            // 只有校验通过了 我们才去调用action
+            await this['user/login'](this.loginForm)
+            this.$router.push('/')
+          } catch (error) {
+            console.log(error)
+          } finally {
+            //  不论执行成功还是失败，关闭加载状态
+            this.loading = false
+          }
         }
       })
     }

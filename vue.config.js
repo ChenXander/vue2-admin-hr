@@ -23,12 +23,12 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    // 代理配置
+    // 开发环境代理配置
     proxy: {
       // 这里的api 表示如果我们的请求地址有/api的时候,就出触发代理机制
       // localhost:8888/api/abc  => 代理给另一个服务器
       '/api': {
-        target: 'http://http://ihrm.itheima.net/', // 我们要代理的地址
+        target: 'http://ihrm.itheima.net/', // 我们要代理的地址
         changeOrigin: true // 是否跨域
         // 路径重写
         // pathRewrite: {}
