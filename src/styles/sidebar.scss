@@ -10,17 +10,17 @@
   }
 
   .sidebar-container {
-    transition      : width 0.28s;
-    width           : $sideBarWidth !important;
-    background-color: $menuBg;
-    height          : 100%;
-    position        : fixed;
-    font-size       : 0px;
-    top             : 0;
-    bottom          : 0;
-    left            : 0;
-    z-index         : 1001;
-    overflow        : hidden;
+    transition: width 0.28s;
+    width     : $sideBarWidth !important;
+    background: -webkit-linear-gradient(bottom, #3d6df8, #5b8cff);
+    height    : 100%;
+    position  : fixed;
+    font-size : 0px;
+    top       : 0;
+    bottom    : 0;
+    left      : 0;
+    z-index   : 1001;
+    overflow  : hidden;
 
     // reset element-ui css
     .horizontal-collapse-transition {
@@ -29,6 +29,7 @@
 
     .scrollbar-wrapper {
       overflow-x: hidden !important;
+      background: url('~@/assets/common/leftnavBg.png') no-repeat 0 100%;
     }
 
     .el-scrollbar__bar.is-vertical {
@@ -68,6 +69,34 @@
       border: none;
       height: 100%;
       width : 100% !important;
+
+      a {
+        li {
+          .svg-icon {
+            color         : #fff;
+            font-size     : 18px;
+            vertical-align: middle;
+
+            .icon {
+              color: #fff;
+            }
+          }
+
+          span {
+            color: #fff;
+          }
+
+          &:hover {
+            .svg-icon {
+              color: #43a7fe
+            }
+
+            span {
+              color: #43a7fe;
+            }
+          }
+        }
+      }
     }
 
     // menu hover
