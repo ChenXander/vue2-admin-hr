@@ -75,7 +75,7 @@ import { mapActions } from 'vuex' // 引入vuex的辅助函数
 
 export default {
   name: 'Login',
-  data() {
+  data () {
     // 手机号校验
     const validateMobile = (rule, value, callback) => {
       validMobile(value) ? callback() : callback(new Error('手机号格式不正确'))
@@ -109,7 +109,7 @@ export default {
   },
   watch: {
     $route: {
-      handler: function(route) {
+      handler: function (route) {
         this.redirect = route.query && route.query.redirect
       },
       immediate: true
@@ -118,7 +118,7 @@ export default {
   methods: {
     ...mapActions(['user/login']), // 子模块的action，并且开启了namespaced，所以引用的时候要带上/user，并且直接this['user/login]来使用
 
-    showPwd() {
+    showPwd () {
       if (this.passwordType === 'password') {
         this.passwordType = ''
       } else {
@@ -128,9 +128,9 @@ export default {
         this.$refs.password.focus()
       })
     },
-    handleLogin() {
+    handleLogin () {
       // 表单手动校验
-      this.$refs.loginForm.validate(async(isOk) => {
+      this.$refs.loginForm.validate(async (isOk) => {
         if (isOk) {
           try {
             this.loading = true

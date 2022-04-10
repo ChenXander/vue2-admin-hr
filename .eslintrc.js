@@ -230,13 +230,7 @@ module.exports = {
       }
     ],
     'space-before-blocks': [2, 'always'],
-    'space-before-function-paren': [
-      2,
-      'never',
-      {
-        asyncArrow: 'always'
-      }
-    ],
+    'space-before-function-paren': [2],
     'space-in-parens': [2, 'never'],
     'space-infix-ops': 2,
     'space-unary-ops': [
@@ -288,6 +282,7 @@ module.exports = {
         svg: 'always',
         math: 'always'
       }
-    ]
+    ],
+    'vue/html-indent': [0]
   }
 }

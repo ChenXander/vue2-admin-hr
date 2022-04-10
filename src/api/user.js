@@ -2,7 +2,7 @@
 import request from '@/utils/request'
 
 // 登录接口
-export function login(data) {
+export function login (data) {
   return request({
     url: '/sys/login',
     method: 'post',
@@ -11,11 +11,11 @@ export function login(data) {
 }
 
 // 获取用户的基本资料
-export function getUserInfo() {
+export function getUserInfo () {
   return request({
     url: '/sys/profile',
     method: 'POST'
   })
 }
 
-export function logout() {}
+export function logout () {}
