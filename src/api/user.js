@@ -17,5 +17,11 @@ export function getUserInfo () {
     method: 'POST'
   })
 }
+// 根据用户id获取用户基本信息
+export function getUserDetailById (id) {
+  return request({
+    url: `/sys/user/${id}`
+  })
+}
 
 export function logout () {}

@@ -1,6 +1,6 @@
 // 用户信息
 import { getToken, setToken, removeToken } from '@/utils/auth'
-import { login, getUserInfo } from '@/api/user'
+import { login, getUserInfo, getUserDetailById } from '@/api/user'
 
 // 状态
 const state = {
@@ -36,7 +36,10 @@ const actions = {
   // 获取用户资料action
   async getUserInfo (context) {
     const result = await getUserInfo()
-    context.commit('setUserInfo', result) // 将整个的个人信息设置到用户的vuex数据中
+    // 获取用户详情
+    const baseInfo = await getUserDetailById(result.userId) // 为了获取头像
+    const baseResult = { ...result, ...baseInfo } // 将两个接口结果合并
+    context.commit('setUserInfo', baseResult) // 将整个的个人信息设置到用户的vuex数据中
     return result // 用于权限管理
   }
 }

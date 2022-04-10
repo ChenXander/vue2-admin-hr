@@ -6,14 +6,14 @@
       @toggleClick="toggleSideBar"
     />
     <div class="app-breadcrumb">
-      xxx科技股份有限公司
+      HR科技股份有限公司
       <span class="breadBtn">体验版</span>
     </div>
 
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img src="@/assets/common/bigUserHeader.png" class="user-avatar" />
+          <img v-imagerror="defaultImg" :src="staffPhoto" class="user-avatar" />
           <span class="name">{{ name }}</span>
           <i class="el-icon-caret-bottom" />
         </div>
@@ -41,14 +41,19 @@ export default {
   components: {
     Hamburger
   },
+  data () {
+    return {
+      defaultImg: require('@/assets/common/head.jpg')
+    }
+  },
   computed: {
-    ...mapGetters(['sidebar', 'avatar', 'name'])
+    ...mapGetters(['sidebar', 'name', 'staffPhoto'])
   },
   methods: {
-    toggleSideBar() {
+    toggleSideBar () {
       this.$store.dispatch('app/toggleSideBar')
     },
-    async logout() {
+    async logout () {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     }
