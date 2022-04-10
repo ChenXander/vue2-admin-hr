@@ -54,8 +54,9 @@ export default {
       this.$store.dispatch('app/toggleSideBar')
     },
     async logout () {
+      // 这里不论写不写 await 登出方法都是同步的
       await this.$store.dispatch('user/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      this.$router.push(`/login`) // 跳到登录
     }
   }
 }

@@ -41,6 +41,14 @@ const actions = {
     const baseResult = { ...result, ...baseInfo } // 将两个接口结果合并
     context.commit('setUserInfo', baseResult) // 将整个的个人信息设置到用户的vuex数据中
     return result // 用于权限管理
+  },
+
+  // 登出的action
+  async logout (context) {
+    // 删除token
+    context.commit('removeToken') // 不仅仅删除了vuex中的 还删除了缓存中的
+    // 删除用户资料
+    context.commit('removeUserInfo') // 删除用户信息
   }
 }
 
