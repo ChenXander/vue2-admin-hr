@@ -1,5 +1,5 @@
 // 用户信息
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getToken, setToken, removeToken, setTimeStamp } from '@/utils/auth'
 import { login, getUserInfo, getUserDetailById } from '@/api/user'
 
 // 状态
@@ -32,6 +32,8 @@ const actions = {
     // 调用api的接口
     const result = await login(data) // 拿到token
     context.commit('setToken', result) // 设置token
+    // 拿到token说明登录成功,设置token时间戳
+    setTimeStamp()
   },
   // 获取用户资料action
   async getUserInfo (context) {
