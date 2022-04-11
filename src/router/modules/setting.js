@@ -15,7 +15,8 @@ export default {
 
       // 路由元信息,其实就是存储数据的对象,可以在这里放置一些信息
       meta: {
-        title: '公司设置'
+        title: '公司设置',
+        icon: 'setting'
       }
     }
   ]

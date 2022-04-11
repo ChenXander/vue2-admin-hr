@@ -18,8 +18,8 @@
         </el-menu-item>
       </app-link>
     </template>
-
-    <el-submenu
+    <!-- 二级菜单(未设计) -->
+    <!--  <el-submenu
       v-else
       ref="subMenu"
       :index="resolvePath(item.path)"
@@ -40,7 +40,7 @@
         :base-path="resolvePath(child.path)"
         class="nest-menu"
       />
-    </el-submenu>
+    </el-submenu> -->
   </div>
 </template>
 
