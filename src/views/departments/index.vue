@@ -3,7 +3,7 @@
     <div class="app-container">
       <!-- 组织架构头部 -->
       <el-card class="tree-card">
-        <tree-tools :tree-node="company" :is-root="true" />
+        <tree-tools :tree-node="company" :is-root="true" @addDepts="addDepts" />
 
         <!-- 树形组件 这里的props是element树形组件的属性-->
         <el-tree
@@ -17,16 +17,19 @@
             slot-scope="{ data }"
             :tree-node="data"
             @delDepts="getDepartments"
+            @addDepts="addDepts"
           />
         </el-tree>
       </el-card>
     </div>
+    <add-dept :show-dialog="showDialog" :tree-node="node" />
   </div>
 </template>
 
 <script>
 // 子组件
 import treeTools from '@/views/departments/components/tree-tools.vue'
+import AddDept from '@/views/departments/components/add-dept.vue'
 
 // api请求
 import { getDepartments } from '@/api/departments'
@@ -35,14 +38,16 @@ import { getDepartments } from '@/api/departments'
 import { transListToTreeData } from '@/utils'
 
 export default {
-  components: { treeTools },
+  components: { treeTools, AddDept },
   data () {
     return {
       company: {}, // 公司数据
       departs: [], // 组织架构数据
       defaultProps: {
         label: 'name' // 表示从这个属性显示内容
-      }
+      },
+      showDialog: false,
+      node: null // 记录当前点击的node
     }
   },
   created () {
@@ -52,9 +57,15 @@ export default {
     async getDepartments () {
       const result = await getDepartments()
       // this.company = { name: result.companyName, manager: '负责人' }
-      this.company = { name: 'HR科技股份有限公司', manager: '负责人' }
+      this.company = { name: result.companyName, manager: '负责人', id: '' }
       this.departs = transListToTreeData(result.depts, '') // 需要将其转化成树形结构
       console.log(result)
+    },
+    // 添加子部门
+    addDepts (node) {
+      this.showDialog = true // 显示弹层
+      // 因为node是当前的点击的部门， 此时这个部门应该记录下来,
+      this.node = node
     }
   }
 }

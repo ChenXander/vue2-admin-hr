@@ -16,7 +16,7 @@
         <el-col>
           <!-- 下拉菜单 element -->
           <el-dropdown @command="operateDepts">
-            <span> 操作<i class="el-icon-arrow-down" /> </span>
+            <span> 操作<i class="el-icon-arrow-down" /></span>
             <!-- 下拉菜单 -->
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="add">添加子部门</el-dropdown-item>
@@ -55,6 +55,7 @@ export default {
     operateDepts (type) {
       if (type === 'add') {
         // 添加子部门的操作
+        this.$emit('addDepts', this.treeNode)
       } else if (type === 'edit') {
         //  编辑部门的操作
       } else {
