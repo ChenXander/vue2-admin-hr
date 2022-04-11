@@ -1,11 +1,22 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+// 引入多个模块的规则
+import approvalsRouter from './modules/approvals'
+import departmentsRouter from './modules/departments'
+import employeesRouter from './modules/employees'
+import permissionRouter from './modules/permission'
+import attendancesRouter from './modules/attendances'
+import salarysRouter from './modules/salarys'
+import settingRouter from './modules/setting'
+import socialRouter from './modules/social'
+
 Vue.use(Router)
 
 /* Layout */
 import Layout from '@/layout'
 
+// 静态路由
 export const constantRoutes = [
   {
     path: '/login',
@@ -37,11 +48,23 @@ export const constantRoutes = [
   { path: '*', redirect: '/404', hidden: true }
 ]
 
+// 动态路由
+export const asyncRoutes = [
+  approvalsRouter,
+  departmentsRouter,
+  employeesRouter,
+  permissionRouter,
+  attendancesRouter,
+  salarysRouter,
+  settingRouter,
+  socialRouter
+]
+
 const createRouter = () =>
   new Router({
     mode: 'history',
-    scrollBehavior: () => ({ y: 0 }),
-    routes: constantRoutes
+    scrollBehavior: () => ({ y: 0 }), // 管理滚动行为 如果出现滚动 切换就让 让页面回到顶部
+    routes: [...constantRoutes, ...asyncRoutes] // 临时合并所有的路由
   })
 
 const router = createRouter()
