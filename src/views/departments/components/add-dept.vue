@@ -23,7 +23,15 @@
           v-model="formData.manager"
           style="width: 80%"
           placeholder="请选择"
-        />
+          @focus="getEmployeeSimple"
+        >
+          <el-option
+            v-for="item in peoples"
+            :key="item.id"
+            :label="item.username"
+            :value="item.username"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item label="部门介绍" prop="introduce">
         <el-input
@@ -48,6 +56,7 @@
 
 <script>
 import { getDepartments } from '@/api/departments'
+import { getEmployeeSimple } from '@/api/employees'
 
 export default {
   name: 'AddDept',
@@ -137,7 +146,14 @@ export default {
             message: '部门介绍要求1-50个字符'
           }
         ]
-      }
+      },
+      peoples: [] // 接收获取的员工简单列表的数据
+    }
+  },
+  methods: {
+    // 获取员工简单列表数据
+    async getEmployeeSimple () {
+      this.peoples = await getEmployeeSimple()
     }
   }
 }
