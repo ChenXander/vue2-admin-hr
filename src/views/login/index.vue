@@ -74,7 +74,6 @@ import { validMobile } from '@/utils/validate'
 import { mapActions } from 'vuex' // 引入vuex的辅助函数
 
 export default {
-  name: 'Login',
   data () {
     // 手机号校验
     const validateMobile = (rule, value, callback) => {
