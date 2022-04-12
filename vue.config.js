@@ -2,7 +2,7 @@
 const path = require('path')
 const defaultSettings = require('./src/settings.js')
 
-function resolve(dir) {
+function resolve (dir) {
   return path.join(__dirname, dir)
 }
 
@@ -28,7 +28,7 @@ module.exports = {
       // 这里的api 表示如果我们的请求地址有/api的时候,就出触发代理机制
       // localhost:8888/api/abc  => 代理给另一个服务器
       '/api': {
-        target: 'http://ihrm.itheima.net/', // 我们要代理的地址
+        target: 'http://ihrm-java.itheima.net/', // 我们要代理的地址
         changeOrigin: true // 是否跨域
         // 路径重写
         // pathRewrite: {}
@@ -45,7 +45,7 @@ module.exports = {
       }
     }
   },
-  chainWebpack(config) {
+  chainWebpack (config) {
     // it can improve the speed of the first screen, it is recommended to turn on preload
     config.plugin('preload').tap(() => [
       {

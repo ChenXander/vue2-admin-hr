@@ -20,6 +20,10 @@ import 'normalize.css/normalize.css' // A modern alternative to CSS resets
  */
 import * as directives from '@/directives'
 /**
+ * 引入工具类
+ */
+import * as filters from '@/filters'
+/**
  * 图标
  */
 import '@/icons' // icon
@@ -34,6 +38,11 @@ Vue.use(Component) // 注册自己的插件
 // 遍历所有的导出的指令对象 完成自定义全局注册
 Object.keys(directives).forEach((key) => {
   Vue.directive(key, directives[key]) // 注册自定义指令
+})
+// 注册全局的过滤器
+Object.keys(filters).forEach((key) => {
+  // 注册过滤器
+  Vue.filter(key, filters[key])
 })
 
 Vue.config.productionTip = false
