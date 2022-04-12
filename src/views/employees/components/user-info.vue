@@ -387,6 +387,13 @@
 </template>
 <script>
 import EmployeeEnum from '@/api/constant/employees'
+// api请求
+import {
+  getPersonalDetail,
+  updatePersonal,
+  saveUserDetailById
+} from '@/api/employees'
+import { getUserDetailById } from '@/api/user'
 
 export default {
   name: 'UserInfo',
@@ -458,6 +465,31 @@ export default {
         proofOfDepartureOfFormerCompany: '', // 前公司离职证明
         remarks: '' // 备注
       }
+    }
+  },
+  created () {
+    this.getPersonalDetail()
+    this.getUserDetailById()
+  },
+  methods: {
+    // 读取用户详情
+    async getPersonalDetail () {
+      this.formData = await getPersonalDetail(this.userId) // 获取员工数据
+    },
+    // 更新用户详情
+    async savePersonal () {
+      await updatePersonal({ ...this.formData, id: this.userId })
+      this.$message.success('保存成功')
+    },
+    // 保存员工的基本信息
+    async saveUser () {
+      //  调用父组件
+      await saveUserDetailById(this.userInfo)
+      this.$message.success('保存成功')
+    },
+    // 根据用户id获取用户基本信息
+    async getUserDetailById () {
+      this.userInfo = await getUserDetailById(this.userId)
     }
   }
 }
