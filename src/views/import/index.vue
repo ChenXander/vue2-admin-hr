@@ -1,20 +1,26 @@
 <template>
-  <!-- 公共导入组件 -->
   <upload-excel :on-success="success" />
 </template>
 
 <script>
 import { importEmployee } from '@/api/employees'
-
 export default {
   data () {
     return {
-      type: this.$route.query.type // 判断是否是导入员工
+      type: this.$route.query.type
     }
   },
   methods: {
     async success ({ header, results }) {
-      // 如果是导入员工
+      // header中的数据 是中文 results中的数据也是中文
+      // 新增的员工的属性是一致的
+      // username: '', 姓名
+      // mobile: '', 手机号
+      // formOfEmployment: '',
+      // workNumber: '', 工号
+      // departmentName: '',
+      // timeOfEntry: '', 入职日期
+      // correctionTime: ''转正日期
       if (this.type === 'user') {
         const userRelations = {
           入职日期: 'timeOfEntry',
@@ -23,34 +29,39 @@ export default {
           转正日期: 'correctionTime',
           工号: 'workNumber'
         }
-        const arr = []
-        results.forEach((item) => {
-          // 需要将每一个条数据里面的中文都换成英文
+        // var arr = []
+        // results.forEach(item => {
+        //   var userInfo = {}
+        //   Object.keys(item).forEach(key => {
+        //     // 现在是key是中文
+        //     userInfo[userRelations[key]] = item[key] // 将原来中文对应的值 赋值给原来英文对应的值
+        //   })
+        //   arr.push(userInfo)
+        // })
+        const newArr = results.map((item) => {
           const userInfo = {}
           Object.keys(item).forEach((key) => {
-            // key是当前的中文名 找到对应的英文名
+            // userInfo[userRelations[key]] = item[key]
             if (
               userRelations[key] === 'timeOfEntry' ||
               userRelations[key] === 'correctionTime'
             ) {
-              // 只有这样才能将数据存入数据库
+              // 后端接口 限制了 不能是字符串 要求转化时间类型
               userInfo[userRelations[key]] = new Date(
                 this.formatDate(item[key], '/')
-              )
+              ) // 只有这样 才能存入数据库
             } else {
-              // 将原来中文对应的值赋值给原来英文对应的值
-              userInfo[userRelations[key]] = item[key]
+              userInfo[userRelations[key]] = item[key] // 将原来中文对应的值 赋值给原来英文对应的值
             }
           })
-          // 最终userInfo变成了全是英文
-          arr.push(userInfo)
+          return userInfo
         })
-        await importEmployee(arr) // 调用导入接口
+        await importEmployee(newArr) // 接收一个数组
         this.$message.success('导入excel成功')
+        this.$router.back() // 回到上一个页面
       }
-      this.$router.back() // 导入成功回到上一页
     },
-    // 转化excel日期格式
+    // 转化excel的日期格式
     formatDate (numb, format) {
       const time = new Date((numb - 1) * 24 * 3600000 + 1)
       time.setYear(time.getFullYear() - 70)
@@ -70,5 +81,5 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style>
 </style>

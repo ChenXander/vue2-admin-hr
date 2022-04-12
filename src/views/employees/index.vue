@@ -12,7 +12,9 @@
           >
             excel导入
           </el-button>
-          <el-button size="small" type="danger">excel导出</el-button>
+          <el-button size="small" type="danger" @click="exportData">
+            excel导出
+          </el-button>
           <el-button size="small" type="primary" @click="showDialog = true">
             新增员工
           </el-button>
@@ -92,6 +94,8 @@ import EmployeeEnum from '@/api/constant/employees'
 
 import addEmployee from '@/views/employees/components/add-employee.vue'
 
+import { formatDate } from '@/filters'
+
 export default {
   components: { addEmployee },
   data () {
@@ -140,6 +144,60 @@ export default {
       } catch (error) {
         console.log(error)
       }
+    },
+    // 导出excel数据
+    exportData () {
+      // 表头对应关系
+      const headers = {
+        姓名: 'username',
+        手机号: 'mobile',
+        入职日期: 'timeOfEntry',
+        聘用形式: 'formOfEmployment',
+        转正日期: 'correctionTime',
+        工号: 'workNumber',
+        部门: 'departmentName'
+      }
+      // 导出的懒加载
+      import('@/vendor/Export2Excel').then(async (excel) => {
+        const { rows } = await getEmployeeList({
+          page: 1,
+          size: this.page.total
+        })
+        const data = this.formatJson(headers, rows)
+
+        const multiHeader = [['姓名', '主要信息', '', '', '', '', '部门']]
+        const merges = ['A1:A2', 'B1:F1', 'G1:G2']
+        excel.export_json_to_excel({
+          header: Object.keys(headers),
+          data,
+          filename: '员工信息表',
+          autoWidth: true,
+          bookType: 'xlsx',
+          multiHeader, // 复杂表头
+          merges // 合并选项
+        })
+      })
+    },
+    // 该方法负责将数组转化成二维数组
+    formatJson (headers, rows) {
+      // 遍历数组
+      // [{ username: '张三'},{},{}]  => [[’张三'],[],[]]
+      return rows.map((item) => {
+        return Object.keys(headers).map((key) => {
+          if (
+            headers[key] === 'timeOfEntry' ||
+            headers[key] === 'correctionTime'
+          ) {
+            return formatDate(item[headers[key]]) // 返回格式化之前的时间
+          } else if (headers[key] === 'formOfEmployment') {
+            const obj = EmployeeEnum.hireType.find(
+              (obj) => obj.id === item[headers[key]]
+            )
+            return obj ? obj.value : '未知'
+          }
+          return item[headers[key]]
+        }) // => ["张三", "13811"，"2018","1", "2018", "10002"]
+      })
     }
   }
 }

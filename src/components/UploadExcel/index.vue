@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import * as XLSX from 'xlsx'
+import * as XLSX from 'xlsx/xlsx.mjs'
 
 export default {
   props: {
@@ -63,6 +63,7 @@ export default {
         return
       }
       const rawFile = files[0] // only use files[0]
+
       if (!this.isExcel(rawFile)) {
         this.$message.error(
           'Only supports upload .xlsx, .xls, .csv suffix files'
@@ -89,6 +90,7 @@ export default {
     },
     upload (rawFile) {
       this.$refs['excel-upload-input'].value = null // fix can't select the same excel
+
       if (!this.beforeUpload) {
         this.readerData(rawFile)
         return
@@ -139,7 +141,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 .upload-excel {
   display: flex;
   justify-content: center;
