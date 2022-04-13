@@ -23,6 +23,7 @@ import * as directives from '@/directives'
  * 引入工具类
  */
 import * as filters from '@/filters'
+import checkPermission from '@/mixin/checkPermission'
 /**
  * 图标
  */
@@ -34,6 +35,9 @@ Vue.use(ElementUI, { locale })
 // 如果想要中文版 element-ui，按如下方式声明
 // Vue.use(ElementUI)
 Vue.use(Component) // 注册自己的插件
+
+// 全局混入
+Vue.mixin(checkPermission)
 
 // 遍历所有的导出的指令对象 完成自定义全局注册
 Object.keys(directives).forEach((key) => {
