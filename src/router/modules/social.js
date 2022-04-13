@@ -1,26 +1,50 @@
-// 导出社保的路由规则
 
 import Layout from '@/layout'
-//  {  path: '', component: '' }
-// 每个子模块 其实 都是外层是layout  组件位于layout的二级路由里面
+
 export default {
-  path: '/social', // 路径
-  component: Layout, // 组件
+  path: '/social_securitys',
+  component: Layout,
   name: 'social_securitys',
-  // 配置二级路的路由表
   children: [
     {
-      path: '', // 这里当二级路由的path什么都不写的时候 表示该路由为当前二级路由的默认路由
-      name: 'social_securitys',
+      path: '',
       component: () => import('@/views/social'),
-
-      // 路由元信息,其实就是存储数据的对象,可以在这里放置一些信息
+      name: 'social_securitys',
       meta: {
         title: '社保',
         icon: 'table'
+
+      }
+    },
+    // 报表
+    {
+      path: 'detail/:id',
+      hidden: true,
+      component: () => import('@/views/social/detail'),
+      name: 'socialDetail',
+      meta: {
+        title: '社保'
+      }
+    },
+    // 历史归档
+    {
+      path: 'historicalArchiving',
+      hidden: true,
+      component: () => import('@/views/social/historical'),
+      name: 'socialHistorical',
+      meta: {
+        title: '历史归档'
+      }
+    },
+    // 月报表
+    {
+      path: 'monthStatement',
+      component: () => import('@/views/social/month'),
+      name: 'socialMonthStatement',
+      hidden: true,
+      meta: {
+        title: '当月报表'
       }
     }
   ]
 }
-
-// 当访问地址是 /social的时候 layout组件会显示,此时二级路由的默认组件也会显示
