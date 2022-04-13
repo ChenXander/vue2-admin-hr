@@ -26,7 +26,10 @@ router.beforeEach(async (to, from, next) => {
         )
         // 动态路由 添加到 路由表中 默认的路由表 只有静态路由 没有动态路由
         // addRoutes  必须 用 next(地址) 不能用next()
-        router.addRoutes(routes) // 添加动态路由到路由表
+        router.addRoutes([
+          ...routes,
+          { path: '*', redirect: '/404', hidden: true }
+        ]) // 添加动态路由到路由表
         // 添加完动态路由之后
         next(to.path)
       } else {
