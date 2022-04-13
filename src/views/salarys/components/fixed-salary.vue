@@ -1,6 +1,10 @@
 <template>
   <div class="fixedDalary">
-    <el-form :label-position="labelPosition" label-width="120px" :model="formLabelAlign">
+    <el-form
+      :label-position="labelPosition"
+      label-width="120px"
+      :model="formLabelAlign"
+    >
       <el-form-item label="当前基本工资">
         <el-input
           v-model="formLabelAlign.currentBasicSalary"
@@ -10,10 +14,20 @@
         />
       </el-form-item>
       <el-form-item label="当前岗位工资">
-        <el-input v-model="formLabelAlign.currentPostWage" placeholder="当前岗位工资" style="width: 60%" type="number" />
+        <el-input
+          v-model="formLabelAlign.currentPostWage"
+          placeholder="当前岗位工资"
+          style="width: 60%"
+          type="number"
+        />
       </el-form-item>
       <el-form-item label="当前工资合计">
-        <el-input v-model="computeCurrentTotal" placeholder="当前工资合计, 自动计算" style="width: 60%" :disabled="true" />
+        <el-input
+          v-model="computeCurrentTotal"
+          placeholder="当前工资合计, 自动计算"
+          style="width: 60%"
+          :disabled="true"
+        />
       </el-form-item>
       <el-form-item label="转正基本工资">
         <el-input
@@ -24,10 +38,20 @@
         />
       </el-form-item>
       <el-form-item label="转正岗位工资">
-        <el-input v-model="formLabelAlign.turnToPostWages" placeholder="转正岗位工资" style="width: 60%" type="number" />
+        <el-input
+          v-model="formLabelAlign.turnToPostWages"
+          placeholder="转正岗位工资"
+          style="width: 60%"
+          type="number"
+        />
       </el-form-item>
       <el-form-item label="转正工资合计">
-        <el-input v-model="computeTurnTotal" placeholder="当前基本工资, 自动计算" style="width: 60%" :disabled="true" />
+        <el-input
+          v-model="computeTurnTotal"
+          placeholder="当前基本工资, 自动计算"
+          style="width: 60%"
+          :disabled="true"
+        />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">确认</el-button>
@@ -42,10 +66,13 @@ import { initSalary } from '@/api/salarys'
 
 export default {
   name: 'UsersTableIndex',
-  props: [
-    'userId'
-  ],
-  data() {
+  props: {
+    userId: {
+      type: String,
+      default: ''
+    }
+  },
+  data () {
     return {
       labelPosition: 'left',
       formLabelAlign: {},
@@ -53,7 +80,7 @@ export default {
     }
   },
   computed: {
-    computeCurrentTotal() {
+    computeCurrentTotal () {
       let base = 0
       if (this.formLabelAlign.currentBasicSalary != null) {
         base = Number(this.formLabelAlign.currentBasicSalary)
@@ -64,7 +91,7 @@ export default {
       }
       return base + post
     },
-    computeTurnTotal() {
+    computeTurnTotal () {
       let base = 0
       if (this.formLabelAlign.correctionOfBasicWages != null) {
         base = Number(this.formLabelAlign.correctionOfBasicWages)
@@ -77,7 +104,7 @@ export default {
     }
   },
   methods: {
-    async onSubmit() {
+    async onSubmit () {
       this.formLabelAlign.userId = this.userId
       const sendData = this.formLabelAlign
       await initSalary(sendData)
@@ -85,7 +112,7 @@ export default {
       this.$emit('success')
       this.onClose()
     },
-    onClose() {
+    onClose () {
       this.formLabelAlign = {}
       this.$emit('onDialogCancel')
     }
@@ -94,7 +121,7 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-@import "../../../styles/variables";
+@import '../../../styles/variables';
 .fixedDalary {
   .infoBox {
     display: flex;

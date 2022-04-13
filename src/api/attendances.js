@@ -1,38 +1,38 @@
 import request from '@/utils/request'
 // 获取考勤列表
-export function getAttendancesList(params) {
+export function getAttendancesList (params) {
   return request({
     url: '/attendances',
     params
   })
 }
 // 获取考勤详情
-export function getAtteArchiveDetail(data) {
+export function getAtteArchiveDetail (data) {
   return request({
     url: `/attendances/archive/${data.userId}/${data.yearMonth}`
   })
 }
-export function updateAttendance(data) {
+export function updateAttendance (data) {
   return request({
     url: `/attendances/${data.userId}`,
     method: 'put',
     data
   })
 }
-export function getArchivingList(params) {
+export function getArchivingList (params) {
   return request({
     url: '/attendances/reports/year',
     params
   })
 }
-export function getArchivingCont(params) {
+export function getArchivingCont (params) {
   return request({
     url: `/attendances/reports/${params.atteArchiveMonthlyId}`,
     params
   })
 }
 
-export function importArchive(data) {
+export function importArchive (data) {
   return request({
     url: '/archive/atte/export',
     method: 'post',
@@ -40,32 +40,32 @@ export function importArchive(data) {
   })
 }
 // 提醒接口
-export function notify() {
+export function notify () {
   return request({
     url: '/notify/mail',
     method: 'post'
   })
 }
-export function archives(params) {
+export function archives (params) {
   return request({
     url: '/attendances/archives',
     params
   })
 }
-export function newReports(params) {
+export function newReports (params) {
   return request({
     url: '/attendances/newReports',
     params
   })
 }
-export function information() {
+export function information () {
   return request({})
 }
 
-export function pay() {
+export function pay () {
   return request({})
 }
-export function reportFormList(params) {
+export function reportFormList (params) {
   return request({
     url: '/attendances/reports',
     params
@@ -73,7 +73,7 @@ export function reportFormList(params) {
 }
 
 // 请假保存
-export function leaveSave(data) {
+export function leaveSave (data) {
   return request({
     url: '/cfg/leave',
     method: 'put',
@@ -81,7 +81,7 @@ export function leaveSave(data) {
   })
 }
 // 请假获取
-export function getLeave(data) {
+export function getLeave (data) {
   return request({
     url: '/cfg/leave/list',
     method: 'post',
@@ -89,7 +89,7 @@ export function getLeave(data) {
   })
 }
 // 扣款设置保存
-export function deductionsSave(data) {
+export function deductionsSave (data) {
   return request({
     url: '/cfg/deduction',
     method: 'put',
@@ -97,7 +97,7 @@ export function deductionsSave(data) {
   })
 }
 // 获取扣款设置
-export function getDeductions(data) {
+export function getDeductions (data) {
   return request({
     url: '/cfg/ded/list',
     method: 'post',
@@ -106,7 +106,7 @@ export function getDeductions(data) {
 }
 
 // 加班配置保存
-export function overtimeSave(data) {
+export function overtimeSave (data) {
   return request({
     url: '/cfg/extDuty',
     method: 'put',
@@ -115,7 +115,7 @@ export function overtimeSave(data) {
 }
 
 // 获取加班配置
-export function getOvertime(data) {
+export function getOvertime (data) {
   return request({
     url: '/cfg/extDuty/item',
     method: 'post',
@@ -123,7 +123,7 @@ export function getOvertime(data) {
   })
 }
 // 考勤数据保存
-export function attendanceSave(data) {
+export function attendanceSave (data) {
   return request({
     url: '/cfg/atte',
     method: 'put',
@@ -131,14 +131,14 @@ export function attendanceSave(data) {
   })
 }
 // 考勤数据保存
-export function getAttendance(data) {
+export function getAttendance (data) {
   return request({
     url: '/cfg/atte/item',
     method: 'post',
     data
   })
 }
-export function fileUpdate(data) {
+export function fileUpdate (data) {
   return request({
     url: `/employees/archives/${data.month}`,
     method: 'put',

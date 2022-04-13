@@ -7,14 +7,14 @@
     </div>
     <div class="myInfoCont">
       <div class="myInfoPic">
-        <img src="@/assets/common/img.jpeg" width="100" alt>
+        <img src="@/assets/common/img.jpeg" width="100" alt />
       </div>
       <div>
         <el-form ref="myInfo" :model="myInfo" label-width="80px">
-          <el-form-item label="姓名" style="width: 300px;">
+          <el-form-item label="姓名" style="width: 300px">
             <el-input v-model="myInfo.username" />
           </el-form-item>
-          <el-form-item label="手机号" style="width: 300px;">
+          <el-form-item label="手机号" style="width: 300px">
             <el-input v-model="myInfo.mobile" />
           </el-form-item>
           <el-form-item label="性别">
@@ -24,7 +24,12 @@
             </el-select>
           </el-form-item>
           <el-form-item label="出生日期">
-            <el-date-picker v-model="myInfo.dateOfBirth" type="date" format="yyyy-MM-dd" placeholder="选择日期" />
+            <el-date-picker
+              v-model="myInfo.dateOfBirth"
+              type="date"
+              format="yyyy-MM-dd"
+              placeholder="选择日期"
+            />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="onSubmit">保存</el-button>
@@ -43,7 +48,7 @@ import { updatePersonal, getPersonalDetail } from '@/api/employees'
 import { mapGetters } from 'vuex'
 export default {
   name: 'UsersTableIndex',
-  data() {
+  data () {
     return {
       loading: false,
       myInfo: {
@@ -55,20 +60,20 @@ export default {
   computed: {
     ...mapGetters(['userId'])
   },
-  created() {
+  created () {
     this.getUserInfo()
   },
   methods: {
-    async onSubmit() {
+    async onSubmit () {
       const user = this.myInfo
       await updateUser(user)
       await updatePersonal(user)
       this.$message.success('保存成功')
     },
-    onCancel() {
+    onCancel () {
       this.$router.back(-1)
     },
-    async getUserInfo() {
+    async getUserInfo () {
       this.loading = true
       const detailData = await getUserDetailById(this.userId)
       const personData = await getPersonalDetail(this.userId)
@@ -82,10 +87,10 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-@import "@/styles/variables.scss";
+@import '@/styles/variables.scss';
 .myInfo {
   padding: 15px;
-  margin-top:15px;
+  margin-top: 15px;
   .myInfoTop {
     color: #666;
     background: #fff;
@@ -99,7 +104,7 @@ export default {
     }
     .act {
       color: $blue;
-      border-bottom: solid 2px  $blue;
+      border-bottom: solid 2px $blue;
     }
   }
   .myInfoCont {

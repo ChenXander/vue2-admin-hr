@@ -2,19 +2,49 @@
   <div class="cont-top-box">
     <el-form label-width="100px">
       <el-form-item label="部门">
-        <el-checkbox-group v-model="departmentChecks" style="display:inline-block">
-          <el-checkbox v-for="item in departmentList" :key="item.id" :label="item.id" @change="checkChange">{{ item.name }}</el-checkbox>
+        <el-checkbox-group
+          v-model="departmentChecks"
+          style="display: inline-block"
+        >
+          <el-checkbox
+            v-for="item in departmentList"
+            :key="item.id"
+            :label="item.id"
+            @change="checkChange"
+          >
+            {{ item.name }}
+          </el-checkbox>
         </el-checkbox-group>
       </el-form-item>
       <el-form-item label="社保城市">
-        <el-checkbox-group v-model="socialSecurityChecks" style="display:inline-block">
-          <el-checkbox v-for="item in cityList" :key="item.id" :label="item.id" @change="checkChange">{{ item.name }}</el-checkbox>
+        <el-checkbox-group
+          v-model="socialSecurityChecks"
+          style="display: inline-block"
+        >
+          <el-checkbox
+            v-for="item in cityList"
+            :key="item.id"
+            :label="item.id"
+            @change="checkChange"
+          >
+            {{ item.name }}
+          </el-checkbox>
         </el-checkbox-group>
       </el-form-item>
 
       <el-form-item label="公积金城市">
-        <el-checkbox-group v-model="providentFundChecks" style="display:inline-block">
-          <el-checkbox v-for="item in cityList" :key="item.id" :label="item.id" @change="checkChange">{{ item.name }}</el-checkbox>
+        <el-checkbox-group
+          v-model="providentFundChecks"
+          style="display: inline-block"
+        >
+          <el-checkbox
+            v-for="item in cityList"
+            :key="item.id"
+            :label="item.id"
+            @change="checkChange"
+          >
+            {{ item.name }}
+          </el-checkbox>
         </el-checkbox-group>
       </el-form-item>
     </el-form>
@@ -27,7 +57,7 @@ import { getDepartments } from '@/api/departments'
 
 export default {
   name: 'SocialTool',
-  data() {
+  data () {
     return {
       tips: {},
       keyword: '',
@@ -38,27 +68,28 @@ export default {
       departmentList: []
     }
   },
-  created: function() {
+  created: function () {
     this.getCityList()
     this.getDepartments()
   },
   methods: {
     // 获取城市
-    async getCityList() {
+    async getCityList () {
       this.cityList = await getCityList()
     },
     // 获取组织架构
-    async getDepartments() {
+    async getDepartments () {
       const { depts } = await getDepartments()
       this.departmentList = depts
     },
-    checkChange() {
+    checkChange () {
       const selectParams = {
-        'departmentChecks': this.departmentChecks,
-        'socialSecurityChecks': this.socialSecurityChecks,
-        'providentFundChecks': this.providentFundChecks
+        departmentChecks: this.departmentChecks,
+        socialSecurityChecks: this.socialSecurityChecks,
+        providentFundChecks: this.providentFundChecks
       }
-      this.$parent.changeSelectParams && this.$parent.changeSelectParams(selectParams)
+      this.$parent.changeSelectParams &&
+        this.$parent.changeSelectParams(selectParams)
     }
   }
 }
@@ -71,5 +102,4 @@ export default {
   border-radius: 3px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 }
-
 </style>

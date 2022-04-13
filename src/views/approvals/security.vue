@@ -8,7 +8,7 @@
             v-model="levelData.enable"
             active-color="#13ce66"
             :inactive-color="inactiveColor"
-            @change="handleChange(levelData,$event)"
+            @change="handleChange(levelData, $event)"
           />
         </span>
         <i class="el-icon-setting" @click="setFlow('regular')" />
@@ -20,7 +20,7 @@
             v-model="overtimeData.enable"
             active-color="#13ce66"
             :inactive-color="inactiveColor"
-            @change="handleChange(overtimeData,$event)"
+            @change="handleChange(overtimeData, $event)"
           />
         </span>
         <i class="el-icon-setting" @click="setFlow('regular')" />
@@ -32,14 +32,14 @@
             v-model="dimissionData.enable"
             active-color="#13ce66"
             :inactive-color="inactiveColor"
-            @change="handleChange(dimissionData,$event)"
+            @change="handleChange(dimissionData, $event)"
           />
         </span>
         <i class="el-icon-setting" @click="setFlow('regular')" />
       </div>
     </div>
     <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
-      <span style="text-align:center">
+      <span style="text-align: center">
         <el-upload
           class="upload-demo"
           drag
@@ -57,24 +57,22 @@
       </span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        <el-button type="primary" @click="dialogVisible = false">
+          确 定
+        </el-button>
       </span>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import {
-  saveSetState,
-  getFlowList,
-  suspend
-} from '@/api/approvals'
-import { importFilexml } from '@/filters'
+import { saveSetState, getFlowList, suspend } from '@/api/approvals'
+// import { importFilexml } from '@/filters'
 import { getToken } from '@/utils/auth'
 export default {
   name: 'UsersTableIndex',
   components: {},
-  data() {
+  data () {
     return {
       requestData: {},
       activeColor: '#13ce66',
@@ -96,19 +94,19 @@ export default {
     }
   },
   computed: {
-    myheader: function() {
+    myheader: function () {
       return {
         Authorization: `Bearer ${getToken()}`
       }
     }
   },
-  created() {
+  created () {
     this.getFlowList()
   },
   methods: {
-    async getFlowList() {
+    async getFlowList () {
       const data = await getFlowList()
-      data.map(item => {
+      data.map((item) => {
         const items = {
           ...item,
           enable: item.persistentState.suspensionState !== 2
@@ -122,7 +120,7 @@ export default {
         }
       })
     },
-    handleChange(obj, e) {
+    handleChange (obj, e) {
       if (!obj.key) {
         this.$message.error('还未上传流程')
         return
@@ -133,28 +131,28 @@ export default {
       }
       suspend(parent)
     },
-    async changeSet() {
+    async changeSet () {
       await saveSetState(this.requestData)
       this.$message.success('设置保存成功！')
     },
-    setFlow(obj) {
+    setFlow (obj) {
       this.dialogVisible = true
     },
     // 文件上传完成
-    typeTip(obj) {
+    typeTip (obj) {
       this.$message.error(obj)
     },
-    beforeUpload(file, obj) {
-      importFilexml(file, obj, this.typeTip)
+    beforeUpload (file, obj) {
+      // importFilexml(file, obj, this.typeTip)
     },
     // 上传错误
-    uploadFail(err, file, fileList) {
+    uploadFail (err, file, fileList) {
       this.uploadTip = '点击上传'
       this.processing = false
       this.$message.error(err)
     },
     // 上传成功
-    handleFileSuccess(obj, file, fileList) {
+    handleFileSuccess (obj, file, fileList) {
       this.uploadTip = '点击上传'
       this.processing = false
       this.dialogImportVisible = false
@@ -170,7 +168,7 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-@import "./../../styles/variables";
+@import './../../styles/variables';
 $active: #13ce66;
 $inactive: #ccc;
 .securitySetting {
