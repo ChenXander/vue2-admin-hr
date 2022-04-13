@@ -17,9 +17,21 @@ router.beforeEach(async (to, from, next) => {
     } else {
       if (!store.getters.userId) {
         // 获取用户资料是异步的
-        await store.dispatch('user/getUserInfo')
+        const { roles } = await store.dispatch('user/getUserInfo')
+        // 筛选用户的可用路由
+        // routes就是筛选得到的动态路由
+        const routes = await store.dispatch(
+          'permission/filterRoutes',
+          roles.menus
+        )
+        // 动态路由 添加到 路由表中 默认的路由表 只有静态路由 没有动态路由
+        // addRoutes  必须 用 next(地址) 不能用next()
+        router.addRoutes(routes) // 添加动态路由到路由表
+        // 添加完动态路由之后
+        next(to.path)
+      } else {
+        next() // 直接放行
       }
-      next() // 直接放行
     }
   } else {
     // 如果没有token
