@@ -1,18 +1,18 @@
 <template>
   <!-- 图片上传组件 -->
-  <div>
+  <div class="container">
     <!-- 上传到腾讯云，需要自定义的上传方式，action给个#防止报错 -->
     <el-upload
-      action="#"
       list-type="picture-card"
       :limit="1"
+      action="#"
       :on-preview="preview"
       :on-remove="handleRemove"
       :on-change="changeFile"
-      :file-list="fileList"
-      :class="{ disabled: fileComputed }"
       :before-upload="beforeUpload"
       :http-request="upload"
+      :file-list="fileList"
+      :class="{ disabled: fileComputed }"
     >
       <i class="el-icon-plus" />
     </el-upload>
@@ -34,8 +34,8 @@
 import COS from 'cos-js-sdk-v5'
 
 const cos = new COS({
-  SecretId: 'AKIDjNq7AyXs35xd8PREm6HH5h7IDtKbidNv',
-  SecretKey: 'NUM3av2tUqwnOlx0sX0FEJAmEWcWFjyx'
+  SecretId: 'AKIDjNq7AyXs35xd8PREm6HH5h7IDtKbidNv', // 身份识别 ID
+  SecretKey: 'NUM3av2tUqwnOlx0sX0FEJAmEWcWFjyx' // 身份密钥
 })
 
 export default {
@@ -44,7 +44,7 @@ export default {
       fileList: [], // 图片地址设置为数组
       showDialog: false, // 控制显示弹层
       imgUrl: '',
-      currentFileUid: '', // 当前上传的uid
+      currentFileUid: null, // 当前上传的uid
       percent: 0, // 当前的百分比
       showPercent: false // 控制显示进度条
     }
@@ -114,9 +114,9 @@ export default {
               this.percent = params.percent * 100
             }
           },
-          function (err, data) {
+          (err, data) => {
             // data返回数据之后 应该如何处理
-            console.log(err || data)
+            // console.log(err || data)
             // data中有一个statusCode === 200 的时候说明上传成功
             if (!err && data.statusCode === 200) {
               // 此时说明文件上传成功 要获取成功的返回地址
@@ -146,7 +146,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .disabled .el-upload--picture-card {
   display: none;
 }
