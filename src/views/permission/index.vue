@@ -5,7 +5,7 @@
       <!-- 靠右的按钮 -->
       <page-tools>
         <template v-slot:after>
-          <el-button type="primary" size="small" @click="addPermission(1, '0')">
+          <el-button type="primary" size="small" @click="addPermission('0', 1)">
             添加权限
           </el-button>
         </template>
@@ -22,7 +22,7 @@
               <el-button
                 v-if="row.type === 1"
                 type="text"
-                @click="addPermission(2, row.id)"
+                @click="addPermission(row.id, 2)"
               >
                 添加
               </el-button>
@@ -166,7 +166,7 @@ export default {
       this.showDialog = false
     },
     // 添加
-    addPermission (type, pid) {
+    addPermission (pid, type) {
       this.formData.pid = pid
       this.formData.type = type
       this.showDialog = true
