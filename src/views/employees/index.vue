@@ -76,7 +76,9 @@
               <el-button type="text" size="small">转正</el-button>
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
-              <el-button type="text" size="small">角色</el-button>
+              <el-button type="text" size="small" @click="editRole(row.id)">
+                角色
+              </el-button>
               <el-button
                 type="text"
                 size="small"
@@ -114,6 +116,13 @@
         <canvas ref="myCanvas" />
       </el-row>
     </el-dialog>
+
+    <!-- 分配角色组件 -->
+    <assign-role
+      ref="assignRole"
+      :show-role-dialog.sync="showRoleDialog"
+      :user-id="userId"
+    />
   </div>
 </template>
 
@@ -122,13 +131,14 @@ import { getEmployeeList, delEmployee } from '@/api/employees'
 import EmployeeEnum from '@/api/constant/employees'
 
 import addEmployee from '@/views/employees/components/add-employee.vue'
+import AssignRole from '@/views/employees/assign-role.vue'
 
 import { formatDate } from '@/filters'
 
 import QrCode from 'qrcode'
 
 export default {
-  components: { addEmployee },
+  components: { addEmployee, AssignRole },
   data () {
     return {
       loading: false,
@@ -139,7 +149,9 @@ export default {
         total: 0 // 总数
       },
       showDialog: false, // 新增员工弹出层
-      showCodeDialog: false // 二维码弹层
+      showCodeDialog: false, // 二维码弹层
+      showRoleDialog: false, // 分配角色弹窗
+      userId: null // 定义userId
     }
   },
   created () {
@@ -247,6 +259,12 @@ export default {
       } else {
         this.$message.warning('该用户还未上传头像')
       }
+    },
+    // 分配角色
+    async editRole (id) {
+      this.userId = id // props传值 是异步的
+      await this.$refs.assignRole.getUserDetailById(id)
+      this.showRoleDialog = true
     }
   }
 }
