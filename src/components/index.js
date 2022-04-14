@@ -6,6 +6,7 @@ import Print from 'vue-print-nb'
 import ScreenFull from './ScreenFull'
 import ThemePicker from './ThemePicker'
 import LangSelect from './Lang'
+import TagsView from './TagsView'
 
 export default {
   install (Vue) {
@@ -23,5 +24,7 @@ export default {
     Vue.component('ThemePicker', ThemePicker)
     // 语言
     Vue.component('LangSelect', LangSelect)
+    // 多页签组件
+    Vue.component('TagsView', TagsView)
   }
 }
