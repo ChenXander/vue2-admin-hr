@@ -9,31 +9,29 @@ function resolve (dir) {
 const name = defaultSettings.title || 'vue Admin Template' // page title
 
 const port = process.env.port || process.env.npm_config_port || 9528 // dev port
-
 let cdn = { css: [], js: [] }
 let externals = {}
-// 通过环境变量 来区分是否使用cdn
 const isProd = process.env.NODE_ENV === 'production' // 判断是否是生产环境
 if (isProd) {
-  // 如果是生产环境 就排除打包 否则不排除
+  // 只有生产环境 才有必要 去做排除和cdn的注入
   externals = {
-    // key(包名) / value(这个值 是 需要在CDN中获取js, 相当于 获取的js中 的该包的全局的对象的名字)
-    vue: 'Vue', // 后面的名字不能随便起 应该是 js中的全局对象名
-    'element-ui': 'ELEMENT', // 都是js中全局定义的
-    xlsx: 'XLSX' // 都是js中全局定义的
+    'element-ui': 'ELEMENT',
+    xlsx: 'XLSX',
+    vue: 'Vue'
   }
   cdn = {
     css: [
       // element-ui css
-      'https://unpkg.com/element-ui/lib/theme-chalk/index.css' // 样式表
+      // 样式表
+      'https://unpkg.com/element-ui/lib/theme-chalk/index.css'
     ],
     js: [
       // vue must at first!
-      'https://unpkg.com/vue/dist/vue.js', // vuejs
+      'https://unpkg.com/vue@2.6.10/dist/vue.js', // vuejs
       // element-ui js
       'https://unpkg.com/element-ui/lib/index.js', // elementUI
-      'https://cdn.jsdelivr.net/npm/xlsx@0.16.6/dist/jszip.min.js',
-      'https://cdn.jsdelivr.net/npm/xlsx@0.16.6/dist/xlsx.full.min.js'
+      'https://cdn.jsdelivr.net/npm/xlsx@0.16.8/dist/jszip.min.js',
+      'https://cdn.jsdelivr.net/npm/xlsx@0.16.8/dist/xlsx.full.min.js'
     ]
   }
 }
@@ -51,14 +49,13 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    // 开发环境代理配置
+    // 配置反向代理
     proxy: {
-      // 这里的api 表示如果我们的请求地址有/api的时候,就出触发代理机制
-      // localhost:8888/api/abc  => 代理给另一个服务器
+      // 当地址中有/api的时候会触发代理机制
       '/api': {
-        target: 'http://ihrm-java.itheima.net/', // 我们要代理的地址
+        target: 'http://ihrm-java.itheima.net/', // 要代理的服务器地址  这里不用写 api
         changeOrigin: true // 是否跨域
-        // 路径重写
+        // 重写路径
         // pathRewrite: {}
       }
     }
@@ -89,7 +86,6 @@ module.exports = {
         include: 'initial'
       }
     ])
-
     //  注入cdn变量
     // 这行代码 会在执行打包的时候 执行 就会将cdn变量注入到 html模板中
     config.plugin('html').tap((args) => {
@@ -97,7 +93,6 @@ module.exports = {
       args[0].cdn = cdn // 后面的cdn就是定义的变量
       return args // 需要返回这个参数
     })
-
     // when there are many pages, it will cause too many meaningless requests
     config.plugins.delete('prefetch')
 
