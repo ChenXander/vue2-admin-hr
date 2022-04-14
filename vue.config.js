@@ -43,6 +43,15 @@ module.exports = {
       alias: {
         '@': resolve('src')
       }
+    },
+    // 要排除的包名
+    // key(是要排除的包名): value(实际上是实际引入的包的全局的变量名 )
+    // 因为要排除element-ui 所以后面要引入CDN文件 CDN文件中有ELEMENTUI的全局变量名
+    // externals首先会排除掉 定义的包名,空出来的位置  会用变量来替换
+    externals: {
+      'element-ui': 'ELEMENT',
+      xlsx: 'XLSX',
+      vue: 'Vue'
     }
   },
   chainWebpack (config) {
