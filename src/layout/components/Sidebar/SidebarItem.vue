@@ -11,9 +11,11 @@
           :index="resolvePath(onlyOneChild.path)"
           :class="{ 'submenu-title-noDropdown': !isNest }"
         >
+          <!-- 每个组件都会有一个$t方法  $t(key) 会返回当前语言模式下的语言包的显示内容 -->
+          <!-- $t() 方法可以传入带点的字符串 表示查询嵌套结构的值 -->
           <item
             :icon="onlyOneChild.meta.icon || (item.meta && item.meta.icon)"
-            :title="onlyOneChild.meta.title"
+            :title="$t('route.' + onlyOneChild.name)"
           />
         </el-menu-item>
       </app-link>

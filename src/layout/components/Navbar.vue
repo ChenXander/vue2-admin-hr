@@ -11,6 +11,10 @@
     </div>
 
     <div class="right-menu">
+      <!-- 切换多语言 -->
+      <lang-select class="right-menu-item" />
+      <!-- 主题 -->
+      <theme-picker class="right-menu-item" />
       <!-- 全屏插件 -->
       <screen-full class="right-menu-item" />
       <el-dropdown class="avatar-container" trigger="click">
