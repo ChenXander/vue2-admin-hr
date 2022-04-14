@@ -3,6 +3,7 @@ import PageTools from './PageTools'
 import UploadExcel from './UploadExcel'
 import ImageUpload from './ImageUpload'
 import Print from 'vue-print-nb'
+import ScreenFull from './ScreenFull'
 
 export default {
   install (Vue) {
@@ -14,5 +15,7 @@ export default {
     Vue.component('ImageUpload', ImageUpload)
     // 打印插件
     Vue.use(Print)
+    // 全屏切换
+    Vue.component('ScreenFull', ScreenFull) // 注册全屏组件
   }
 }

@@ -3,7 +3,7 @@
     <div class="contLeft">
       <h2>{{ information.user_name }}申请请假</h2>
       <div class="topTit">
-        <img src="@/assets/common/img.jpeg" alt>
+        <img src="@/assets/common/img.jpeg" alt />
         <div class="info">
           <p class="name">
             <strong>{{ information.username }}</strong>
@@ -17,12 +17,10 @@
         </div>
       </div>
       <div class="content">
-        <p>
-          <span>申请类型：</span>请假
-        </p>
+        <p><span>申请类型：</span>请假</p>
         <p>
           <span>请假类型：</span>
-          {{ information.data.holidayType ==1 ?'事假' : '调休' }}
+          {{ information.data.holidayType == 1 ? '事假' : '调休' }}
         </p>
         <p>
           <span>申请单位：</span>
@@ -52,13 +50,18 @@
       </div>
       <div class="Items">
         <li v-for="(item, index) in taskInstanceOutList" :key="index">
-          <div class="name" :style="index==taskInstanceOutList.length-1?'border-right:none':''">
+          <div
+            class="name"
+            :style="
+              index == taskInstanceOutList.length - 1 ? 'border-right:none' : ''
+            "
+          >
             <p>{{ item.handleTime | formatDate }}</p>
             <!-- <p>{{item.description}}</p> -->
           </div>
           <div class="act">
             <strong>{{ item.handleUserName }}</strong>
-            <span v-if="index==0">发起申请</span>
+            <span v-if="index == 0">发起申请</span>
             <span v-else-if="item.handleType == '3'">审批驳回</span>
             <span v-else-if="item.handleType == '4'">已撤销</span>
             <span v-else-if="item.handleType == '1'">未开始</span>
@@ -72,11 +75,15 @@
 </template>
 
 <script>
-import { getApprovalsDetail, getApprovalsTaskDetail, downImg } from '@/api/approvals'
+import {
+  getApprovalsDetail,
+  getApprovalsTaskDetail,
+  downImg
+} from '@/api/approvals'
 export default {
   name: 'UsersTableIndex',
   components: {},
-  data() {
+  data () {
     return {
       approvalId: this.$route.params.id,
       information: {
@@ -86,24 +93,29 @@ export default {
       imgs: ''
     }
   },
-  created() {
+  created () {
     this.getApprovalsDetail()
     this.getApprovalsTaskDetail()
   },
   methods: {
-    async getApprovalsDetail() {
+    async getApprovalsDetail () {
       this.information = await getApprovalsDetail(this.approvalId)
       this.information.data = JSON.parse(this.information.procData)
     },
-    async getApprovalsTaskDetail() {
+    async getApprovalsTaskDetail () {
       this.taskInstanceOutList = await getApprovalsTaskDetail(this.approvalId)
     },
     // 图片下载
-    async getReviewHistory(id) {
+    async getReviewHistory (id) {
       const response = await downImg(id)
-      this.imgs = 'data:image/png;base64,' + btoa(
-        new Uint8Array(response.request.response).reduce((data, byte) => data + String.fromCharCode(byte), '')
-      )
+      this.imgs =
+        'data:image/png;base64,' +
+        btoa(
+          new Uint8Array(response.request.response).reduce(
+            (data, byte) => data + String.fromCharCode(byte),
+            ''
+          )
+        )
     }
   }
 }
